@@ -32,7 +32,7 @@ public class ServerConnessioneTCP {
             try{
                 // il server si mette in ascolto sulla porta voluta
                 sSocket = new ServerSocket(port);
-                System.out.println("In attesa di connessioni!");
+                System.out.println("In attesa di connessioni con il client!");
                 //si è stabilita la connessione
                 connection = sSocket.accept();
                 System.out.println("Connessione stabilita!");
