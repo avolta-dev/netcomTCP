@@ -8,6 +8,8 @@ package Connection;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +25,8 @@ public class ServerConnessioneTCP {
     public static void main(String[] args) {
         // porta del server maggiore di 1024 
         int port=2000;
+        // tempo in millisecondi di attesa
+        int time=2000;
         //oggetto ServerSocket necessario per accettare richieste dal client
         ServerSocket sSocket = null;
         //oggetto da usare per realizzare la connessione TCP
@@ -33,16 +37,19 @@ public class ServerConnessioneTCP {
                 // il server si mette in ascolto sulla porta voluta
                 sSocket = new ServerSocket(port);
                 System.out.println("In attesa di connessioni con il client!");
+                // il server imposta un tempo di attesa
+                sSocket.setSoTimeout(time);
                 //si è stabilita la connessione
                 connection = sSocket.accept();
                 System.out.println("Connessione stabilita!");
                 System.out.println("Socket server: " + connection.getLocalSocketAddress());
                 System.out.println("Socket client: " + connection.getRemoteSocketAddress());
+            } catch (SocketTimeoutException ex) {
+                System.err.println("Tempo di attesa scaduto!");
+            } catch (IOException ex) {
+                System.err.println("Errore di I/O della connessione!");
             }
-               catch(IOException e){
-                   System.err.println("Errore di I/O!");
-            }
-            
+                        
             //chiusura della connessione con il client
             try {
                 if (sSocket!=null) sSocket.close();
