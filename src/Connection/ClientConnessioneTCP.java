@@ -45,8 +45,8 @@ public class ClientConnessioneTCP {
 
         //chiusura della connnessione
         finally{
-                try {
-            if (connection!=null)
+            try {
+                if (connection!=null)
                 {
                     connection.close();
                     System.out.println("Connessione chiusa!");
